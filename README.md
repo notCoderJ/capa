@@ -35,7 +35,7 @@ src
 
 <br/>
 
-## 실행 방법
+## ▶ 실행 방법
 
 ### 1. 패키지 설치
 
@@ -43,21 +43,9 @@ src
 yarn install # or npm install
 ```
 
-### 2. json-server 설치
-
-```bash
-npm install -g json-server
-```
-
-### 3. json-server 실행
-
-```bash
-# json-server [실행할 json형식의 db파일]
-json-server requests.json
-```
-
-### 4. 프로젝트 실행
-
+### 2. 서버 및 App 실행
 ```bash
 yarn start
 ```
+
+### 3. 웹 사이트(http://localhost:3000) 접속
