@@ -43,9 +43,14 @@ src
 yarn install # or npm install
 ```
 
-### 2. 서버 및 App 실행
+### 2. 소스 빌드
+```bash
+yarn build
+```
+
+### 3. 서버 및 App 실행
 ```bash
 yarn start
 ```
 
-### 3. 웹 사이트(http://localhost:3000) 접속
+### 4. 웹 사이트(http://localhost:3000) 접속
