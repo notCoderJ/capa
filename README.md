@@ -31,6 +31,7 @@ src
 <br/>
 
 ## 🎮 데모
+<img src="https://user-images.githubusercontent.com/21259498/148638144-81e93e62-57c7-49f1-ad9c-c03b1042407f.gif" width="700px"/> <img src="https://user-images.githubusercontent.com/21259498/148638167-224c1a67-c936-4fea-9ba5-cd35bf45e91e.gif" width="194px"/>
 
 <br/>
 
