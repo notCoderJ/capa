@@ -1,16 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { CircularProgress } from '@material-ui/core';
 import { Refresh } from '@material-ui/icons';
-import { toast } from 'react-toastify';
-import customAPI from '../api';
-import {
-  RequestItem,
-  MultiSelect,
-  Button,
-  Switch,
-  RequestDataType,
-} from '../components';
+import { RequestItem, MultiSelect, Button, Switch } from '../components';
+import { useRequestData } from '../hooks';
 
 type ContentsContainerProps = {
   $loading: boolean;
@@ -20,85 +13,17 @@ type ContentsWrapperProps = {
   empty: boolean;
 };
 
-const getQueries = (methods: string[], materials: string[]) => {
-  if (methods.length === 0 && materials.length === 0) {
-    return '';
-  }
-
-  if (methods.length === 0) {
-    return `material_like=${materials.join('&material_like=')}`;
-  }
-
-  if (materials.length === 0) {
-    return `method_like=${methods.join('&method_like=')}`;
-  }
-
-  return methods
-    .map(
-      (method) =>
-        `method_like=${method}&material_like=${materials.join(
-          `&method_like=${method}&material_like=`,
-        )}`,
-    )
-    .join('&');
-};
-
 const EstimateRequestPage = () => {
-  const [requestList, setRequestList] = useState<RequestDataType[]>([]);
-  const [methodTypes, setMethodTypes] = useState<string[]>([]);
-  const [materialTypes, setMaterialTypes] = useState<string[]>([]);
-  const [status, setStatus] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const queries = `${status ? `status=${status}&` : ''}${getQueries(
-          methodTypes,
-          materialTypes,
-        )}`.replace(/&$/, '');
-
-        setLoading(true);
-        const res = await customAPI.get(`/requests?${queries}`);
-        setRequestList(() => res.data);
-      } catch (err) {
-        toast.error('서버와 연결이 불안정합니다.', { toastId: 'queryError' });
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, [status, methodTypes, materialTypes]);
-
-  const handleMethod = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) =>
-      e.target.checked
-        ? setMethodTypes((old) => [...old, e.target.value])
-        : setMethodTypes((old) =>
-            old.filter((method) => method !== e.target.value),
-          ),
-    [],
-  );
-
-  const handleMaterial = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) =>
-      e.target.checked
-        ? setMaterialTypes((old) => [...old, e.target.value])
-        : setMaterialTypes((old) =>
-            old.filter((method) => method !== e.target.value),
-          ),
-    [],
-  );
-
-  const handleReset = useCallback(() => {
-    setMethodTypes([]);
-    setMaterialTypes([]);
-  }, []);
-
-  const handleStatus = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) =>
-      e.target.checked ? setStatus('상담중') : setStatus(''),
-    [],
-  );
+  const {
+    loading,
+    requestList,
+    methodTypes,
+    materialTypes,
+    handleMethod,
+    handleMaterial,
+    handleReset,
+    handleStatus,
+  } = useRequestData();
 
   return (
     <PageLayout>
